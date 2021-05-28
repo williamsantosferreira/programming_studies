@@ -1,0 +1,15 @@
+5
+Shakespeare
+Drama
+Romeu e Julieta
+5.50
+10
+Virginia Woolf
+Non Fiction
+Aventurados
+10.50
+2
+Leo Buscaglia
+Autodevelopment
+Amor
+33.33
