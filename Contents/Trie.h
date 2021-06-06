@@ -102,16 +102,3 @@ int delete_node(Trie *node,std::string word,int level){
 	}
 	return 0;
 	}
-
-int main(){
-	Trie *teste = new_trie();
-	insert(teste,"any");
-	insert(teste,"answer");
-	insert(teste,"their");
-	insert(teste,"the");
-		
-	delete_node(teste,"answer",0);
-	
-
-	return 0;
-}
