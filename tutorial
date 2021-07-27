@@ -1,0 +1,7 @@
+--> How to compile codes on Ubuntu
+
+sudo gedit FILE_NAME //to edit your code
+
+sudo g++ FILE_NAME -o EXECUTABLE_NAME //to compile your code and create an executable
+
+./EXECUTABLE_NAME //to run your code
