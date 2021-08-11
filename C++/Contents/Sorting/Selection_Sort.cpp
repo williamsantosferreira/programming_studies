@@ -7,8 +7,10 @@ void selection_sort(int* vector, int n){
 	    	min = vector[i1];
 		LOC = -1;
 		for(int i2 = i1+1; i2 < n; i2++){
-			if(vector[i2] < min)
+			if(vector[i2] < min){
+				min = vector[i2];
 				LOC = i2;
+			}
 		}
 		if(LOC > 0){
 			auxiliar = vector[LOC];

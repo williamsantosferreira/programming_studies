@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <fstream>
 
+//Need to add the DELETE Method
+
 struct Node{
 	int age;
 	Node *next;
