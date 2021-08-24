@@ -3,64 +3,25 @@
 #include <stdlib.h>
 #include <fstream>
 
-//Need to add the DELETE Method
-
 struct Node{
-	int age;
+	int value;
 	Node *next;
 };
 
 class Linked_List{
 	private:
 		Node *start;
-		std::ofstream write;
-		std::ifstream read;
-		std::string arq;
 	public:
-		Linked_List(std::string file){
+		Linked_List(){
 			start = NULL;
-			arq = file + ".txt";
 		}
-		
-		int open_write(){
-			write.open(arq.c_str());
-			if(write.good())
-				return 1;
-			return 0;
-		}
-		
-		int open_read(){
-			read.open(arq.c_str());
-			if(read.good())
-				return 1;
-			return 0;
-		}
-	
-	void read_arq(){
-		if(open_read()){
-			Node *temp,*temp2;
-			temp = new Node;
-			temp->next = NULL;
-			start = temp;
-			while(read>>temp->age){
-				temp2 = temp;
-				temp = new Node;
-				temp->next = NULL;
-				temp2->next = temp;
-			}
-			delete temp;
-			temp2->next = NULL;
-		}
-	}
-	
-	void new_node(){
+		void new_node(int value){
 			Node *temp,*temp2;
 				
 				temp = new Node;
-				
-				std::cout<<"Write the age: ";
-					std::cin>>temp->age;
+				temp->value = value;
 				temp->next = NULL;
+				
 			if(start == NULL)
 				start = temp;
 			else{
@@ -69,74 +30,97 @@ class Linked_List{
 					temp2 = temp2->next;
 			}
 				temp2->next = temp;
-				gravar();
 			}}
 		
-	void show_node(){
-		Node *temp;
-		if(start == NULL)
-			std::cout<<"There's nothing to show!"<<std::endl;
-		else{
-			temp = start;
-			while(temp->next != NULL){
-				std::cout<<temp->age<<std::endl;
-				temp = temp->next;
-			}
-			std::cout<<temp->age<<std::endl;
-		}
-	}
-	
-	void gravar(){
-		Node *temp;
-		if(open_write()){
-			temp = start;
+		void show_node(){
+			Node *temp;
 			if(start == NULL)
-				std::cout<<"Any nodes to save!"<<std::endl;
+				std::cout<<"There's nothing to show!"<<std::endl;
 			else{
-				while(temp->next != NULL){
-					write<<temp->age<<std::endl;
+				temp = start;
+				while(temp!= NULL){
+					std::cout<<temp->value<<" ";
 					temp = temp->next;
 				}
-				write<<temp->age<<std::endl;
-				write.close();
+				std::cout<<std::endl;
 			}
 		}
-	}
+		int len(){
+			Node* temp;
+			int length = 0;
+			
+			temp = start;
+			while(temp != NULL){
+				temp = temp->next;
+				length++;
+			}
+			return length;
+		}
+		
+		Node* search(int value){
+			Node* temp;
+			
+			temp = start;
+			
+			while(temp != NULL){
+				if(temp->value == value)
+					return temp;
+				temp = temp->next;
+			}
+			return NULL;
+		}
+		
+		void delete_node(int value){
+			Node* temp;
+			
+			if(this->search(value) != NULL){
+				if(start->value == value){
+					if(start->next == NULL){
+						delete start;
+						start = NULL;
+					}
+					else{
+						temp = start->next;
+						delete start;
+						start = temp;
+					}
+				}
+				else{
+					temp = start;
+					while(temp->next->value != value)
+						temp = temp->next;
+					if(temp->next->next == NULL){
+						delete temp->next;
+						temp->next = NULL;
+					}
+					else{
+						Node* temp1;
+						temp1 = temp->next;
+						temp->next = temp->next->next;
+						delete temp1;
+					}
+					
+				}
+			}
+				
+		}
+		
 };
 
 int main(){
-	std::string arq = "teste";
-	Linked_List list(arq);
+	Linked_List list;
+	Node* temp;
 	
-	int escolha = 1;
+	list.new_node(10);
+	list.new_node(11);
+	list.new_node(12);
 	
-	while(escolha != 4){
-		system("cls");
-		std::cout<<"1. New node\n2. Show all nodes\n3. Read file\n4. Exit\nChoose: ";
-			std::cin>>escolha;
-		switch(escolha){
-			case 1:
-					list.new_node();
-					list.gravar();
-					break;
-			case 2:
-					list.show_node();
-					system("pause");
-					break;
-			case 3:
-					list.read_arq();
-					break;
-			case 4:
-					std::cout<<"Thanks for using my program!"<<std::endl;
-					break;
-			default:
-					std::cout<<"Invalid choose!"<<std::endl;
-					system("pause");
-					break;
-		}
-			
-	}
+	list.show_node();
 	
-
+	list.delete_node(12);
+	
+	list.show_node();
+	
+	
 	return 0;	
 }
