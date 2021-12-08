@@ -1,0 +1,64 @@
+/*
+Good morning! Here's your coding interview problem for today.
+
+This problem was asked by Nest.
+
+Create a basic sentence checker that takes in a stream of characters and 
+determines whether they form valid sentences. 
+If a sentence is valid, the program should print it out.
+
+We can consider a sentence valid if it conforms to the following rules:
+
+1.The sentence must start with a capital letter,followed by a lowercase letter or a space.
+2. All other characters must be lowercase letters, separators (,,;,:) 
+or terminal marks (.,?,!,?).
+3.There must be a single space between each word.
+4.The sentence must end with a terminal mark immediately following a word.
+
+*/
+#include <iostream>
+#include <string>
+int checker(std::string msg);
+
+int main(){
+	std::string msg;
+	
+	std::cout<<"Write a message: ";
+	getline(std::cin,msg);
+	
+	if(checker(msg))
+		std::cout<<msg;
+	
+	
+	return 0;
+}
+
+int checker(std::string msg){
+	if((msg[0]<65 || msg[0]>90))
+		return 0;
+	if(!(msg[1]>=97 && msg[1]<=122))
+		if(msg[1]!=32)
+			return 0;
+	if(!(msg[msg.length()- 1] == 46 || msg[msg.length()-1] == 33 || msg[msg.length()-1] == 63))	
+			return 0;
+	
+	for(int i = 1; i < msg.length(); i++){
+		if(msg[i]==32 && msg[i+1]==32)
+			return 0;
+		else if(!((msg[i]>=97 && msg[i]<=122))){
+			if(msg[i] == 44 || msg[i] == 58 || msg[i] == 59 ){ //separators
+				if(i+1 == msg.length())
+					return 0;
+		}
+			else if(msg[i] == 46 || msg[i] == 33 || msg[i] == 63){ //terminal marks
+				if(i+1 != msg.length())
+					return 0;
+				else if(msg[i-1]<97 || msg[i-1]>122)
+					return 0;
+			}
+		
+	}
+		
+}
+	return 1;
+}
