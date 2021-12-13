@@ -1,0 +1,95 @@
+//Array MinHeap
+#include <iostream>
+#include <cmath>
+#define size 100
+
+class MinHeap{
+	private:
+		int heap[size];
+		int heap_size; //current number of elements.
+	public:
+		MinHeap(){
+			heap_size = 0;
+		}
+		
+		void add(int element){
+			if(heap_size+1 == size)
+				std::cout<<"You can't add more elements!";
+			else{
+				heap_size++;
+				heap[heap_size-1] = element;
+				
+				re_heap(heap_size-1);
+			}
+		}
+		
+		void re_heap(int position){
+			int valor;
+			if(position > 0){
+				if(heap[position] < heap[(position-1)/2]){
+					valor = heap[position];
+					heap[position] = heap[(position-1)/2];
+					heap[(position-1)/2] = valor;
+					
+					re_heap((position-1)/2);
+			}}
+		}
+		
+		void show(){ //To fix the visualization
+			int rows;
+			for(rows = 1;;rows++){
+				if(pow(2,rows)-1 >= heap_size)
+					break;
+			} 
+			for(int cont = rows, pos = 0; cont > 0; cont--){
+				for(int cont2 = 1; cont2 < cont; cont2++)
+					std::cout<<"  ";
+				for(; pos < pow(2,rows+1-cont)-1;pos++){
+					if(pos < heap_size)
+						std::cout<<heap[pos]<<" ";
+				}
+				std::cout<<std::endl;
+			}
+		}	
+		
+		void s(){
+			for(int cont = 0; cont < heap_size; cont++)
+				std::cout<<heap[cont]<<" ";
+		}
+		
+		int get_min(){
+			return heap[0];
+		}
+		
+		void extract_min(){
+			if(heap_size == 0)
+				std::cout<<"It's not possible to do that. There's any element on the heap!";
+			else{
+				int lenght = heap_size;
+				heap_size = 0;
+				for(int cont = 1; cont < lenght; cont++)
+					add(heap[cont]);
+			}
+		}
+};
+
+int main(){
+	MinHeap h;
+	
+	h.add(3);
+    h.add(2);
+    h.add(1);
+    h.add(15);
+    h.add(5);
+    h.add(4);
+    h.add(45);
+    h.add(12);
+    h.add(30);
+    
+    h.show();
+    h.extract_min();
+    h.show();
+    
+	
+	return 0;
+}
